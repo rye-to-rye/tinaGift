@@ -17,7 +17,7 @@ body {
   --circle-move-delay: 26.5s;
 
   /* Black screen fades out starting at 21 seconds */
-  --overlay-fade-delay: 28s;
+  --overlay-fade-delay: 29.5s;
   --overlay-fade-duration: 2.5s;
 
   /* Spin speed */
@@ -456,7 +456,7 @@ html, body {
   animation: 
     circleMoveToSection var(--circle-shrink-duration) ease-out forwards var(--circle-move-delay),
     spinForever var(--spin-duration) linear infinite,
-    fixedFadeOut 1s ease-out forwards 28.5s;
+    fixedFadeOut 1s ease-out forwards 29.5s;
 }
 
 
