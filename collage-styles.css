@@ -1,0 +1,593 @@
+body {
+  position: relative;
+  z-index: 0;
+}
+
+:root {
+  /* Circle fade in finishes at 7 seconds */
+  --circle-fade-duration: 7s;
+
+  /* Hold from 7s → 19s = 12 seconds */
+  --circle-hold-duration: 17s;
+
+  /* Circle shrink happens at 19s */
+  --circle-shrink-duration: 1s;
+
+  /* Move AFTER the black screen fades away → 21 seconds */
+  --circle-move-delay: 26.5s;
+
+  /* Black screen fades out starting at 21 seconds */
+  --overlay-fade-delay: 28s;
+  --overlay-fade-duration: 2.5s;
+
+  /* Spin speed */
+  --spin-duration: 20s;
+
+  /* Final resting place */
+  --final-circle-top: 129px;
+  --final-circle-left: 261px;
+}
+
+
+
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden; /* disables vertical + horizontal scrolling */
+  margin: 0;
+  padding: 0;
+}
+
+
+  .background {
+  background-image: url("Images/yourNameBackground.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  transition: opacity 2s ease-in-out;
+  }
+
+    /* When Sparkle starts */
+  .background.fade-out {
+    opacity: 0;
+  }
+
+  .background.fade-in-new {
+    background-image: url("Images/yourNameBackground2.png");
+    opacity: 1;
+  }
+
+  .screen {
+    height: 100vh;
+    width: 100vw;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative; /* optional */
+    margin: 0;
+    padding: 0;
+  }
+
+  .outside {
+    position: relative;
+    border: none;
+    height: 700px;
+    width: 1300px;
+    display: flex;
+    flex-direction: row;
+    z-index: 100;
+
+    background: rgba(255, 255, 255, 0.071); /* transparent */
+    backdrop-filter: blur(15px);          /* blur the background behind it */
+    -webkit-backdrop-filter: blur(15px);  /* Safari support */
+    border-radius: 12px;                  /* optional but looks cleaner */
+  }
+
+
+
+  .section1 {
+    flex: 1;
+    border: 2px solid white;
+    display: flex;
+    flex-direction: column;
+  }
+
+
+
+  .music-card {
+    flex: 1;
+    border: 2px solid white;
+  }
+
+  .slide-show {
+    flex: 1;
+    border: 2px solid white;
+  }
+
+  .music-card {
+    width: 260px;
+    padding: 20px;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    color: white;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-self: flex-end;
+    align-content: center;
+
+    /* remove flex:1 so it doesn't stretch */
+    flex-shrink: 0;
+    flex-grow: 0;
+
+    /* optional: place it at the top of section1 */
+    margin: 15px;
+  }
+  .song-info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+.song-title {
+  font-size: 20px;
+  margin: 0;
+  font-weight: 600;
+  transition: opacity 1s ease-in-out;
+}
+
+.song-title.fade-out {
+  opacity: 0;
+}
+
+.song-title.fade-in {
+  opacity: 1;
+}
+
+.artist {
+  margin: 0;
+  opacity: 0.7;
+  font-size: 14px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  width: 40%; /* example progress */
+  background: white;
+}
+
+.controls {
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.control-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.play {
+  font-size: 26px;
+}
+
+.equalizer {
+  display: flex;
+  align-self: center;
+  gap: 4px;
+  height: 40px;
+  align-items: flex-end; /* THIS makes the bars grow upward */
+}
+
+.equalizer .bar {
+  width: 6px;
+  background: white;
+  border-radius: 3px;
+  animation: bounce 1s infinite ease-in-out;
+}
+
+.equalizer .bar:nth-child(1) { animation-delay: 0s; }
+.equalizer .bar:nth-child(2) { animation-delay: .1s; }
+.equalizer .bar:nth-child(3) { animation-delay: .2s; }
+.equalizer .bar:nth-child(4) { animation-delay: .3s; }
+.equalizer .bar:nth-child(5) { animation-delay: .4s; }
+.equalizer .bar:nth-child(6) { animation-delay: .5s; }
+.equalizer .bar:nth-child(7) { animation-delay: .6s; }
+
+@keyframes bounce {
+  0% { height: 5px; }
+  50% { height: 35px; }
+  100% { height: 5px; }
+}
+
+
+  .slide-show {
+  flex: 1;
+  margin: 15px;
+  margin-top: 0;
+  border-radius: 12px;
+
+  /* keep the white border you want */
+  border: 2px solid white;
+
+  /* this makes the inside content stretch */
+  position: relative;
+  overflow: hidden;
+
+  /* stretch children to fill */
+  display: flex;
+  }
+
+.slideshow-images {
+  width: 100%;
+  height: 100%; /* IMPORTANT */
+  position: relative;
+}
+
+.slideshow-images img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  top: 0;
+  left: 0;
+
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.slideshow-images img.active {
+  opacity: 1;
+}
+
+.slideshow-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 10px 14px;
+  font-size: 26px;
+
+  color: white;
+  background: rgba(0, 0, 0, 0.4);
+  border: none;
+  border-radius: 6px;
+
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity .3s;
+
+  /* always stay inside the white border */
+  z-index: 2;
+}
+
+.slideshow-btn.left { left: 10px; }
+.slideshow-btn.right { right: 10px; }
+
+.slide-show:hover .slideshow-btn {
+  opacity: 1;
+}
+
+
+.section2 {
+  flex: 1;
+  border: 2px solid white;
+  overflow-y: auto;        /* scrolling enabled */
+  padding: 30px; 
+  box-sizing: border-box;
+
+
+    /* NEW: darker transparent background */
+  background: rgba(0, 0, 0, 0.15); /* adjust darkness here */
+  backdrop-filter: blur(6px);      /* keeps it frosted */
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* prettier scrollbar (optional but nice) */
+.section2::-webkit-scrollbar {
+  width: 8px;
+}
+.section2::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+.section2::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 4px;
+}
+
+/* Love letter styling */
+.love-letter {
+  color: white;
+  font-family: "Georgia", serif;
+  font-size: 18px;
+  line-height: 1.7;
+  letter-spacing: 0.4px;
+}
+
+.love-letter h1 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 32px;
+  font-weight: 400;
+  margin-bottom: 20px;
+  color: white;
+}
+
+.love-letter p {
+  margin-bottom: 25px;
+  opacity: 0.9;
+}
+
+
+.hung-bday,
+.movie-night {
+  position: absolute;
+  width: 120px;   /* adjust size */
+  height: auto;
+  z-index: 9999;
+}
+
+
+
+
+
+.hung-bday img,
+.movie-night img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border: 3px solid white;       /* polaroid border */
+  border-radius: 6px;
+  transform: rotate(-8deg);      /* slight tilt for collage vibe */
+}
+
+.hung-bday {
+  top: -20px;
+  left: -20px;
+  transform: rotate(-4deg); /* different tilt */
+}
+
+
+.movie-night {
+  bottom: -20px;
+  right: -20px;
+  transform: rotate(12deg); /* different tilt */
+}
+
+
+.hung-bday,
+.movie-night {
+  position: absolute;
+  width: 120px;
+  height: auto;
+  z-index: 9999; /* ← bring polaroids to the front */
+}
+
+
+.black-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: black;
+  
+  /* Middle Z-INDEX */
+  z-index: 2000;
+  
+  pointer-events: all;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.black-overlay.started {
+  pointer-events: none;
+  animation: fadeOutBlack var(--overlay-fade-duration) ease-in forwards var(--overlay-fade-delay);
+}
+
+@keyframes fadeOutBlack {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.start-button {
+  padding: 20px 40px;
+  font-size: 24px;
+  font-family: "Georgia", serif;
+  color: white;
+  background: rgba(180, 0, 0, 0.8);
+  border: 3px solid white;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  animation: pulse 2s infinite;
+  z-index: 999999;
+  position: relative;
+}
+
+.start-button:hover {
+  background: rgba(200, 0, 0, 0.9);
+  transform: scale(1.05);
+}
+
+.start-button.hidden {
+  display: none;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* 1. The Spinning Circle Wrapper (Highest Layer) */
+.circle-spin-wrapper {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 350px;
+  height: 350px;
+  transform: translate(-50%, -50%);
+  
+  /* HIGHEST Z-INDEX so it is always visible */
+  z-index: 3000; 
+  
+  /* CRITICAL: This allows clicks to pass through to the button */
+  pointer-events: none; 
+}
+
+.circle-spin-wrapper.started {
+  animation: 
+    circleMoveToSection var(--circle-shrink-duration) ease-out forwards var(--circle-move-delay),
+    spinForever var(--spin-duration) linear infinite,
+    fixedFadeOut 1s ease-out forwards 28.5s;
+}
+
+
+.intro-circle {
+  width: 100%;
+  height: 100%;
+  background: rgba(180, 0, 0, 0.92);
+  border: 6px solid white;
+  border-radius: 50%;
+  overflow: hidden;
+  opacity: 0;
+  transform: scale(1.05);
+}
+
+.intro-circle.started {
+  animation:
+    circleFadeIn var(--circle-fade-duration) ease-out forwards,
+    circleHold var(--circle-hold-duration) linear forwards var(--circle-fade-duration),
+    circleShrink var(--circle-shrink-duration) ease-out forwards calc(var(--circle-fade-duration) + var(--circle-hold-duration));
+}
+
+.intro-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+
+@keyframes circleFadeIn {
+  from { opacity: 0; transform: scale(1.05); }
+  to   { opacity: 1; transform: scale(1.05); }
+}
+
+@keyframes circleHold {
+  from { opacity: 1; transform: scale(1.05); }
+  to   { opacity: 1; transform: scale(1.05); }
+}
+
+@keyframes circleShrink {
+  from { transform: scale(1.05); }
+  to   { transform: scale(0.40); }
+}
+
+@keyframes spinForever {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes circleMoveToSection {
+  0% {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    top: var(--final-circle-top);
+    left: var(--final-circle-left);
+    transform: translate(0, 0) rotate(360deg);
+  }
+}
+
+
+.circle-final-position {
+position: absolute;
+width: 140px;
+height: 140px;
+
+/* position next to music card */
+top: 35px;
+left: 110px;  /* shifts circle to the right of the music card */
+
+z-index: 10; /* ABOVE section1 content, BELOW polaroids */
+pointer-events: none;
+
+opacity: 0;
+animation: relativeFadeIn 1s ease-in forwards 28.5s;
+}
+
+.circle-final-position .relative-circle {
+width: 100%;
+height: 100%;
+background: rgba(180, 0, 0, 0.92);
+border: 6px solid white;
+border-radius: 50%;
+overflow: hidden;
+animation: spinForeverRelative var(--spin-duration) linear infinite;
+}
+
+.circle-final-position .relative-circle img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+object-position: center;
+}
+
+@keyframes relativeFadeIn {
+from { opacity: 0; }
+to { opacity: 1; }
+}
+
+@keyframes spinForeverRelative {
+from { transform: rotate(0deg); }
+to { transform: rotate(360deg); }
+}
+
+@keyframes fixedFadeOut {
+from { opacity: 1; }
+to { opacity: 0; }
+}
+
+.circle-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: black;
+  
+  /* LOWEST Z-INDEX */
+  z-index: 1001;
+  
+  pointer-events: none;
+  opacity: 1;
+}
+
+.circle-overlay.started {
+animation: circleOverlayFade 1.2s ease-out forwards 5s;
+}
+
+@keyframes circleOverlayFade {
+from { opacity: 1; }
+to   { opacity: 0; }
+}
