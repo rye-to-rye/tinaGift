@@ -456,7 +456,7 @@ html, body {
   animation: 
     circleMoveToSection var(--circle-shrink-duration) ease-out forwards var(--circle-move-delay),
     spinForever var(--spin-duration) linear infinite,
-    fixedFadeOut 1s ease-out forwards 30.5s;
+    fixedFadeOut 1s ease-out forwards 30.1s;
 }
 
 
