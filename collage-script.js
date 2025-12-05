@@ -6,7 +6,15 @@ const slideImages = [
   "slide4.png",
   "slide5.jpg",
   "slide6.jpg",
-  "slide7.png"
+  "slide7.png",
+  "slide8.jpg",
+  "slide9.jpg",
+  "slide10.jpg",
+  "slide11.png",
+  "slide12.png",
+  "slide13.png",
+  "slide14.png",
+  "slide15.PNG"
 ];
 
 // 2) Get the slideshow container inside .slide-show
